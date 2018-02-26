@@ -15,8 +15,9 @@
  */
 package com.zeloon.deezer.service;
 
+import com.fasterxml.jackson.databind.DeserializationFeature;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.zeloon.deezer.io.ResourceConnection;
-import org.codehaus.jackson.map.ObjectMapper;
 
 import java.io.IOException;
 
@@ -59,7 +60,8 @@ public class DeezerRestTemplate {
     }
 
     private <T> T convertJson(final String content, Class<T> targetClass) throws IOException {
-        ObjectMapper mapper = new ObjectMapper();
+        ObjectMapper mapper = new ObjectMapper()
+        		 .configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false);
         return mapper.readValue(content, targetClass);
     }
 
